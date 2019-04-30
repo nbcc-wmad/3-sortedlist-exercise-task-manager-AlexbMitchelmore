@@ -61,17 +61,44 @@ namespace SortedListExTask
                     TaskList.Add(dtpTaskDate.Value, txtTask.Text.Trim());
                     MessageBox.Show(dtpTaskDate.Value.ToString());
 
+                    
+
                     dtpTaskDate.ResetText();
                     txtTask.ResetText();
                 }
-
-
 
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, ex.GetType().ToString());
             }
+        }
+
+        private void btnPrintAll_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string message = string.Empty;
+
+                if (TaskList.Count == 0)
+                {
+                    message += "You currently have no tasks saved";
+                }
+                else
+                {
+                    foreach (var task in TaskList)
+                    {
+                        message += $"{task.Key} {task.Value} \n";
+                    }
+                }
+
+                MessageBox.Show(message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().ToString());
+            }
+  
         }
     }
 }
