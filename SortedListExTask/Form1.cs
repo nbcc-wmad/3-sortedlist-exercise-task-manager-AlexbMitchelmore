@@ -33,7 +33,8 @@ namespace SortedListExTask
                 }
                 else
                 {
-
+                    TaskList.RemoveAt(lstTasks.SelectedIndex);
+                    lstTasks.Items.Remove(lstTasks.SelectedItem);
                 }
             
             }
@@ -61,7 +62,9 @@ namespace SortedListExTask
                     TaskList.Add(dtpTaskDate.Value, txtTask.Text.Trim());
                     MessageBox.Show(dtpTaskDate.Value.ToString());
 
-                    
+                    //lstTasks.Items.Add(TaskList.Keys.ToString());
+                    lstTasks.Items.Add(dtpTaskDate.Value.ToString());
+
 
                     dtpTaskDate.ResetText();
                     txtTask.ResetText();
@@ -99,6 +102,11 @@ namespace SortedListExTask
                 MessageBox.Show(ex.Message, ex.GetType().ToString());
             }
   
+        }
+
+        private void lstTasks_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
         }
     }
 }
