@@ -21,20 +21,23 @@ namespace SortedListExTask
             InitializeComponent();
         }
 
-        SortedList<DateTime, String> TaskList = new SortedList<DateTime, string>();
+        //List to hold the date and task
+        private SortedList<DateTime, String> TaskList = new SortedList<DateTime, string>();
 
         private void btnRemoveTask_Click(object sender, EventArgs e)
         {
             try
             {
-                if (lstTasks.SelectedIndex == -1)
+                if (lstTasks.SelectedIndex == -1)//checks if nothing is selected
                 {
                     MessageBox.Show("You must select a task to remove.");
                 }
                 else
                 {
-                    TaskList.RemoveAt(lstTasks.SelectedIndex);
-                    lstTasks.Items.Remove(lstTasks.SelectedItem);
+                    int index = Convert.ToInt32(lstTasks.SelectedIndex);
+                    TaskList.RemoveAt(index);//removes from tasklist
+                    lstTasks.Items.Remove(lstTasks.SelectedItem);//removes from list
+                    lstTasks.SelectedIndex = -1;
                 }
             
             }
@@ -49,25 +52,23 @@ namespace SortedListExTask
         {
             try
             {
-                if (txtTask.Text == String.Empty)
+                DateTime taskDate = dtpTaskDate.Value.Date;//gives short value
+
+                if (txtTask.Text == String.Empty)//checks if empty
                 {
                     MessageBox.Show("You must enter a task.");
                 }
-                else if (TaskList.Keys.Contains(dtpTaskDate.Value))
+                else if (TaskList.Keys.Contains(taskDate))//checks ifteh date excists in the task list
                 {
                     MessageBox.Show("Only one task per day allowed.");
                 }
                 else
                 {
-                    TaskList.Add(dtpTaskDate.Value, txtTask.Text.Trim());
-                    MessageBox.Show(dtpTaskDate.Value.ToString());
+                    TaskList.Add(taskDate, txtTask.Text.Trim());//adds date and task to tasklist
+                    lstTasks.Items.Add(taskDate);//adds date to list
 
-                    //lstTasks.Items.Add(TaskList.Keys.ToString());
-                    lstTasks.Items.Add(dtpTaskDate.Value.ToString());
-
-
-                    dtpTaskDate.ResetText();
-                    txtTask.ResetText();
+                    dtpTaskDate.ResetText();//resets datetimepicker
+                    txtTask.ResetText();//resets textbox
                 }
 
             }
@@ -83,13 +84,13 @@ namespace SortedListExTask
             {
                 string message = string.Empty;
 
-                if (TaskList.Count == 0)
+                if (TaskList.Count == 0)//checks if there are no tasks
                 {
                     message += "You currently have no tasks saved";
                 }
                 else
                 {
-                    foreach (var task in TaskList)
+                    foreach (var task in TaskList)//loops through tasklist and gives all keys and values
                     {
                         message += $"{task.Key} {task.Value} \n";
                     }
@@ -106,6 +107,15 @@ namespace SortedListExTask
 
         private void lstTasks_SelectedIndexChanged(object sender, EventArgs e)
         {
+            try
+            {
+                lblTaskDetails.Text = TaskList[Convert.ToDateTime(lstTasks.SelectedItem)];
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().ToString());
+            }
+
             
         }
     }

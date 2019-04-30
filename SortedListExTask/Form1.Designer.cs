@@ -109,6 +109,7 @@
             this.dtpTaskDate.Name = "dtpTaskDate";
             this.dtpTaskDate.Size = new System.Drawing.Size(200, 20);
             this.dtpTaskDate.TabIndex = 9;
+            this.dtpTaskDate.Value = new System.DateTime(2019, 4, 30, 0, 0, 0, 0);
             // 
             // Form1
             // 
